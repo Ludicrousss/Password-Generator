@@ -2,6 +2,17 @@ import random
 import string
 import tkinter as tk
 from tkinter import messagebox
+import pyperclip
+
+# Function to generate password and display in GUI
+def generate_password_gui():
+    length = int(length_entry.get())
+    complexity = complexity_var.get()
+    password = password_generator.generate_password(length=length, complexity=complexity)
+    password_label.config(text="Generated Password: " + password)
+    root.clipboard_clear()  # Clear the clipboard
+    root.clipboard_append(password)  # Append the password to the clipboard
+
 
 class PasswordGenerator:
     def __init__(self):
