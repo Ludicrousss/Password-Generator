@@ -4,16 +4,6 @@ import tkinter as tk
 from tkinter import messagebox
 import pyperclip
 
-# Function to generate password and display in GUI
-def generate_password_gui():
-    length = int(length_entry.get())
-    complexity = complexity_var.get()
-    password = password_generator.generate_password(length=length, complexity=complexity)
-    password_label.config(text="Generated Password: " + password)
-    root.clipboard_clear()  # Clear the clipboard
-    root.clipboard_append(password)  # Append the password to the clipboard
-
-
 class PasswordGenerator:
     def __init__(self):
         self.default_length = 10
@@ -43,6 +33,14 @@ def generate_password_gui():
     complexity = complexity_var.get()
     password = password_generator.generate_password(length=length, complexity=complexity)
     password_label.config(text="Generated Password: " + password)
+    root.clipboard_clear()  # Clear the clipboard
+    root.clipboard_append(password)  # Append the password to the clipboard
+
+# Function to copy password to clipboard
+def copy_to_clipboard():
+    password = password_label.cget("text").split(":")[1].strip()  # Get the generated password
+    root.clipboard_clear()  # Clear the clipboard
+    root.clipboard_append(password)  # Append the password to the clipboard
 
 # Create Tkinter window
 root = tk.Tk()
@@ -68,6 +66,10 @@ complexity_dropdown.pack()
 # Generate button
 generate_button = tk.Button(root, text="Generate Password", command=generate_password_gui)
 generate_button.pack()
+
+# Button to copy password to clipboard
+copy_button = tk.Button(root, text="Copy Password", command=copy_to_clipboard)
+copy_button.pack()
 
 # Label to display generated password
 password_label = tk.Label(root, text="")
